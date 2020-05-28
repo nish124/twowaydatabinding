@@ -1,0 +1,88 @@
+<div *ngIf="submitted">
+    <div class="grid-container">
+        <div class="grid-item">{{model.name}}</div>
+        <div class="grid-item">{{model.surname}}</div>
+        <div class="grid-item">{{model.mobile}}</div>
+        <div class="grid-item">{{model.address}}</div>
+    </div>
+    <div class="grid-item-1">
+        <h3>Multiple of {{ model.tablenumber }}</h3>
+        <p *ngFor="let val of [].constructor(10);let i=index">
+                {{ model.tablenumber }} * {{ i+1 }} = {{ model.tablenumber * (i+1)}}
+        </p>
+    </div>
+    <div class="grid-item-2">
+        <div>
+            <button type="refresh" class="btn btn-success btn-block btn-sub" (click)="refresh()">Refresh</button>
+        </div>
+    </div>
+</div>
+
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm" *ngIf="!submitted" style="width: 100%;" class="frm">
+<div class="grid-container">
+    <div class="grid-item">
+            <input type="text" class="form-control"  id="name" placeholder="Enter Firstname"
+                required
+                pattern="[a-zA-Z ]*"
+                [(ngModel)]="model.name" name="name"
+                #name="ngModel">
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                    <div [hidden]="!name.hasError('required')">First name is required..</div>
+                    <div [hidden]="!name.hasError('pattern')">Only alphabets are allowed..</div>
+                </div>
+    </div>
+    <div class="grid-item">
+        <input type="text" class="form-control" id="surname" placeholder="Enter Lastname"
+                required
+                pattern="[a-zA-Z ]*"
+                [(ngModel)]="model.surname" name="surname"
+                #surname="ngModel">
+                <div [hidden]="surname.valid || surname.pristine" class="alert alert-danger">
+                    <div [hidden]="!surname.hasError('required')">Last name is required..</div>
+                    <div [hidden]="!surname.hasError('pattern')">Only alphabets are allowed..</div>
+                </div>
+    </div>
+    <div class="grid-item">
+        <input type="text" class="form-control" id="address" placeholder="Enter Address"
+            required
+            [(ngModel)]="model.address" name="address"
+            #address="ngModel">
+            <div [hidden]="address.valid || address.pristine"
+               class="alert alert-danger">
+               <div [hidden]="!address.hasError('required')">Address is required</div>
+            </div>
+    </div>  
+    <div class="grid-item">
+        <input type="text" class="form-control" id="mobilenumber" placeholder="Enter Mobile No."
+            required
+            [(ngModel)]="model.mobile" name="mobilenumber"
+            pattern="[0-9]*"
+            minlength="10"
+            maxlength="10" 
+            #mobile="ngModel">
+            <div [hidden]="mobile.valid || mobile.pristine"
+               class="alert alert-danger">
+               <div [hidden]="!mobile.hasError('required')">Mobile is required</div>
+               <div [hidden]="!mobile.hasError('pattern')">Mobile number should be only numbers..</div>
+            </div>
+    </div>
+    <div class="grid-item">
+        <input type="text" class="form-control" id="tablenumber" placeholder="Enter Number"
+            required
+            [(ngModel)]="model.tablenumber" name="tablenumber"
+            pattern="[0-9]*"
+            maxlength="2" 
+            #tablenumber="ngModel">
+            <div [hidden]="tablenumber.valid || tablenumber.pristine"
+               class="alert alert-danger">
+               <div [hidden]="!tablenumber.hasError('required')">It is required</div>
+               <div [hidden]="!tablenumber.hasError('pattern')">It should be only numbers..</div>
+            </div>
+    </div>  
+</div>
+<div class="btn-sub-outer">
+    <div>
+        <button type="submit" class="btn btn-success btn-block btn-sub" [disabled]="!loginForm.form.valid">Submit</button>
+    </div>
+</div>
+</form>
